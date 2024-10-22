@@ -13,3 +13,11 @@ Since the energy consumption for all three types is not possible due to differen
 - Temperature data.
 - Datetime
 - Other household data
+
+***NOTE***: Here, two datasets are used, weather forecasting data and hourly readings for each household along with the specific house area readings such as kitchen, hall, leaving room etc.
+
+## Approach: 
+
+- Data Preprocessing
+- Feature Engineering
+- Modeling
