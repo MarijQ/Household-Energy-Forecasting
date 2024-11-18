@@ -1,0 +1,23 @@
+sensor_type,min_value,max_value,average_value,unit
+c_electric-mains_electric-combined,0,11649,382.45454545454544,Watts
+electric-mains_electric-combined,0,7266,265.75,Watts
+gas-pulse_gas,-115204,3649578,4078.5,Watt hours
+heatcook_humidity,202,1037,538.5,% RH
+heatcook_light,0,7664,24.5,Uncalibrated units
+heatcook_temperature,63,344,196.5,°C
+heater_humidity,49,879,512.5,% RH
+heater_light,0,7597,52.5,Uncalibrated units
+heater_temperature,66,600,189.5,°C
+room_humidity,10,1100,540.9230769230769,% RH
+room_light,0,65535,114.07692307692308,Uncalibrated units
+room_temperature,0,600,186.6153846153846,°C
+tempprobe_bath,65,521,179.0,°C
+tempprobe_central-heating-flow,5,804,290.6666666666667,°C
+tempprobe_central-heating-return,3,748,263.0833333333333,°C
+tempprobe_hot-water-cold-pipe,1,626,187.41666666666666,°C
+tempprobe_hot-water-hot-pipe,1,713,235.66666666666666,°C
+tempprobe_oven,93,463,195.0,°C
+tempprobe_radiator-input,35,763,223.1818181818182,°C
+tempprobe_radiator-output,20,725,208.1818181818182,°C
+tempprobe_shower,3,545,162.0,°C
+tempprobe_sink,38,649,194.0,°C
