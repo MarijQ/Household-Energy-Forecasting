@@ -1,3 +1,8 @@
+# TODO
+# ARIMA hyperparameter tuning (or auto-tune)
+# SARIMAX
+# Fix cross-validation (cleaning of other files)
+
 import os
 import random
 import numpy as np
