@@ -2,6 +2,7 @@
 # ARIMA hyperparameter tuning (or auto-tune)
 # SARIMAX
 # Fix cross-validation (cleaning of other files)
+# Enable GPU/Cuda
 
 import os
 import random
@@ -21,13 +22,15 @@ from sklearn.preprocessing import MinMaxScaler
 # Global Settings and Configuration
 # ========================================
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 # Library settings
 pd.set_option('display.width', 1000)
 pd.set_option('display.max_columns', None)
 
 # Directories
-CHARTS_DIR = "./Marij/charts"
-TEST_DATA_DIR = "./Marij/ind_homes"  # Directory for independent home data
+CHARTS_DIR = r"./Marij/charts"
+TEST_DATA_DIR = r"./Marij/ind_homes"  # Directory for independent home data
 os.makedirs(CHARTS_DIR, exist_ok=True)
 
 
@@ -291,7 +294,7 @@ def cross_validate_model(test_files, base_model_order, columns):
 
 def main():
     clear_chart_directory()
-    data_file = './sensor_data_47.csv'
+    data_file = r'./sensor_data_47.csv'
     base_model_order = (1, 0, 1)
     evaluation_columns = ['elec', 'gas']  # Columns to evaluate separately
 
@@ -334,7 +337,7 @@ def main():
 
 
 def test():
-    data_file = './Marij/ind_homes/home_home167.csv'
+    data_file = r'./Marij/ind_homes/home_home167.csv'
     base_model_order = (1, 0, 1)
     evaluation_columns = ['elec', 'gas']  # Columns to evaluate separately
 
