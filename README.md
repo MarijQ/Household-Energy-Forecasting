@@ -1,12 +1,16 @@
 # ML-Project
 
 # 1. Intoduction
+Why and what are we doing in this project? narrative of the project. Intorduce the team work and what was the tasks for all the team member
 
 # 2. Key Features
+model used, teck stack used, dataset used
 
 # 3. Data Prep
+data cleaning, feature engineering, table of features used. 
 
 # 4. ML Models
+brief definition about all the models used and why is it used.
 
 # 5. Results
 
@@ -22,26 +26,11 @@ The single-layer LSTM didn’t perform well for either electricity or gas predic
 - **LSTM Sequential**:
 The sequential LSTM did great for electricity predictions because it’s good at learning patterns over time. However, it struggled with gas data, likely because gas usage patterns are less predictable and harder to model.
 
-# Context
+- 6. Running the code (script)
+explain how to run the code, dependencies and requirements
 
-# Project Scope: 
+- 7. Furture Work
+what else can be done, new methods (if any), potential improvements in the current work.
 
-Develop an ML model to predict gas, water and electricity consumption based on historical data, weather data and other features related to the subject area. The main aim is to predict accurate energy consumption for proper future planning. 
-
-Since the energy consumption for all three types is not possible due to different unit measurements, predicting separately provides accurate information. 
-
-# Data Required: 
-
-- Historical Data (energy Consumption)
-- Weather data
-- Temperature data.
-- Datetime
-- Other household data
-
-***NOTE***: Here, two datasets are used, weather forecasting data and hourly readings for each household along with the specific house area readings such as kitchen, hall, leaving room etc.
-
-## Approach: 
-
-- Data Preprocessing
-- Feature Engineering
-- Modeling
+- 8. Licence
+open source. anyone can contrbute
