@@ -91,37 +91,37 @@ def evaluate_arima():
     """Train and evaluate ARIMA on a single random household, test on 5 random households."""
     train_file = random_household_selection(1)[0]
     df_train = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, train_file)))
+    train_cols = df_train.columns
 
-    # For ARIMA, we only need the target column to be consistent, but let's reindex test sets anyway
-    train_cols = df_train.columns  # save the columns from training
-    
     test_files = random_household_selection(5, exclude=[train_file])
-    test_results = []
+
+    # Store RMSE values separately for elec and gas
+    rmse_dict = {"elec": [], "gas": []}
 
     for target in ["elec", "gas"]:
-        # Skip if target doesn't exist in train
         if target not in df_train.columns:
             continue
-        
+
         arima_model = fit_arima(df_train, target)
         for test_file in test_files:
             df_test = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, test_file)))
-            # Reindex test to match train columns
             df_test = df_test.reindex(columns=train_cols, fill_value=0)
-            
+
             if target not in df_test.columns:
                 continue
-            
+
             try:
                 forecast = arima_model.forecast(steps=len(df_test))
-                rmse = evaluate_model(df_test[target], forecast)
-                if rmse and np.isfinite(rmse):
-                    test_results.append(rmse)
-            except Exception as e:
-                # Handle scenarios where forecasting fails
+                rmse = np.sqrt(mean_squared_error(df_test[target], forecast))
+                if np.isfinite(rmse):
+                    rmse_dict[target].append(rmse)
+            except:
                 pass
 
-    return np.mean(test_results) if test_results else None
+    # Convert list of RMSEs to mean per target
+    for t in rmse_dict:
+        rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
+    return rmse_dict
 
 # ========================================
 # SARIMAX Model
@@ -144,39 +144,38 @@ def evaluate_sarimax():
     """Train and evaluate SARIMAX on a single random household, test on 5 random households."""
     train_file = random_household_selection(1)[0]
     df_train = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, train_file)))
-    train_cols = df_train.columns  # save for consistency
+    train_cols = df_train.columns
 
     test_files = random_household_selection(5, exclude=[train_file])
-    test_results = []
+    rmse_dict = {"elec": [], "gas": []}
 
     for target in ["elec", "gas"]:
         if target not in df_train.columns:
             continue
-        
+
         sarimax_model = fit_sarimax(df_train, target_col=target)
         for test_file in test_files:
             df_test = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, test_file)))
-            # Ensure columns match the training set
             df_test = df_test.reindex(columns=train_cols, fill_value=0)
-            
+
             if target not in df_test.columns:
                 continue
 
             exog_test = df_test[df_test.columns.difference([target])]
-            # Ensure exog is numeric
-            exog_test = exog_test.select_dtypes(include=[np.number])
-            exog_test.fillna(0, inplace=True)
+            exog_test = exog_test.select_dtypes(include=[np.number]).fillna(0)
 
             try:
                 forecast = sarimax_model.forecast(steps=len(df_test), exog=exog_test)
-                forecast = forecast[:len(df_test[target])]  # Ensure alignment
-                rmse = evaluate_model(df_test[target], forecast)
-                if rmse and np.isfinite(rmse):
-                    test_results.append(rmse)
+                forecast = forecast[:len(df_test[target])]
+                rmse = np.sqrt(mean_squared_error(df_test[target], forecast))
+                if np.isfinite(rmse):
+                    rmse_dict[target].append(rmse)
             except Exception as e:
                 print(f"Error during SARIMAX evaluation for {test_file}: {e}")
-                continue
-    return np.mean(test_results) if test_results else None
+
+    for t in rmse_dict:
+        rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
+    return rmse_dict
 
 # ========================================
 # LSTM Single Household
@@ -222,25 +221,21 @@ def evaluate_lstm_single():
     """Train and evaluate LSTM on a single random household, test on 5 random households."""
     train_file = random_household_selection(1)[0]
     df_train = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, train_file)))
-    train_cols = df_train.columns  # columns after dummy encoding
+    train_cols = df_train.columns
 
     test_files = random_household_selection(5, exclude=[train_file])
-    test_results = []
+    rmse_dict = {"elec": [], "gas": []}
 
     for target in ["elec", "gas"]:
         if target not in df_train.columns:
             continue
 
-        # Fit the LSTM on the training household
         lstm_model, scaler_X, scaler_y = fit_lstm_single(df_train, target)
 
-        # Evaluate on each test household
         for test_file in test_files:
             df_test = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, test_file)))
-            # Align columns with training
             df_test = df_test.reindex(columns=train_cols, fill_value=0)
 
-            # Drop rows missing target
             if target not in df_test.columns:
                 continue
             df_test = df_test.dropna(subset=[target])
@@ -248,9 +243,7 @@ def evaluate_lstm_single():
             data_test = df_test.drop(columns=[target]).values
             target_test = df_test[target].values
 
-            # Scale test data using the training scalers
             data_test_scaled = scaler_X.transform(data_test)
-            target_test_scaled = scaler_y.transform(target_test.reshape(-1, 1))
 
             # Create sequences
             sequence_len = 24
@@ -258,19 +251,18 @@ def evaluate_lstm_single():
             for i in range(sequence_len, len(data_test_scaled)):
                 X_test.append(data_test_scaled[i - sequence_len:i])
             X_test = np.array(X_test)
-
-            # Align ground truth
             y_test = target_test[sequence_len:]
 
-            # Predict
             y_pred_scaled = lstm_model.predict(X_test)
             y_pred = scaler_y.inverse_transform(y_pred_scaled)
 
-            rmse = evaluate_model(y_test, y_pred.flatten())
-            if rmse and np.isfinite(rmse):
-                test_results.append(rmse)
+            rmse = np.sqrt(mean_squared_error(y_test, y_pred.flatten()))
+            if np.isfinite(rmse):
+                rmse_dict[target].append(rmse)
 
-    return np.mean(test_results) if test_results else None
+    for t in rmse_dict:
+        rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
+    return rmse_dict
 
 # ========================================
 # LSTM Sequential Training
@@ -325,13 +317,12 @@ def fit_lstm_sequential(train_dfs, target_col):
 
 def evaluate_lstm_sequential():
     """
-    Train LSTM sequentially on 5 random households, then evaluate on another 5.
-    Ensures consistent columns across all households (train & test).
+    Train LSTM sequentially on 5 random households, then evaluate on another 5,
+    returning separate RMSE for elec and gas.
     """
     train_files = random_household_selection(5)
     test_files = random_household_selection(5, exclude=train_files)
 
-    # ---- Build a consistent set of columns for all train files ----
     train_dfs = []
     union_train_cols = set()
 
@@ -340,27 +331,23 @@ def evaluate_lstm_sequential():
         df_temp = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, f)))
         train_dfs.append(df_temp)
         union_train_cols = union_train_cols.union(df_temp.columns)
-
     union_train_cols = list(union_train_cols)
 
     # Reindex each train df to the union of columns
     for idx, df_temp in enumerate(train_dfs):
         train_dfs[idx] = df_temp.reindex(columns=union_train_cols, fill_value=0)
 
-    # Fit LSTM sequentially for each target
-    test_results = []
+    rmse_dict = {"elec": [], "gas": []}
+
     for target in ["elec", "gas"]:
-        # If the target doesn't exist in the union, skip
         if target not in union_train_cols:
             continue
 
-        # Train model sequentially on the 5 train DataFrames
         lstm_model, scaler_X, scaler_y = fit_lstm_sequential(train_dfs, target)
 
         # Evaluate on test files
         for test_file in test_files:
             df_test = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, test_file)))
-            # Reindex to union columns
             df_test = df_test.reindex(columns=union_train_cols, fill_value=0)
 
             if target not in df_test.columns:
@@ -369,10 +356,8 @@ def evaluate_lstm_sequential():
 
             data_test = df_test.drop(columns=[target]).values
             target_test = df_test[target].values
-
             data_test_scaled = scaler_X.transform(data_test)
 
-            # Create sequences
             sequence_len = 24
             X_test = []
             for i in range(sequence_len, len(data_test_scaled)):
@@ -380,39 +365,45 @@ def evaluate_lstm_sequential():
             X_test = np.array(X_test)
             y_true = target_test[sequence_len:]
 
-            # Predict
             y_pred_scaled = lstm_model.predict(X_test)
             y_pred = scaler_y.inverse_transform(y_pred_scaled)
 
-            rmse = evaluate_model(y_true, y_pred.flatten())
-            if rmse and np.isfinite(rmse):
-                test_results.append(rmse)
-    
-    return np.mean(test_results) if test_results else None
+            rmse = np.sqrt(mean_squared_error(y_true, y_pred.flatten()))
+            if np.isfinite(rmse):
+                rmse_dict[target].append(rmse)
+
+    for t in rmse_dict:
+        rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
+    return rmse_dict
 
 # ========================================
 # Main Execution
 # ========================================
 
 if __name__ == "__main__":
-    results = {}
-
     print("Evaluating ARIMA Model...")
-    arima_rmse = evaluate_arima()
-    results["ARIMA"] = arima_rmse if arima_rmse else "Evaluation failed"
+    arima_results = evaluate_arima()
 
     print("Evaluating SARIMAX Model...")
-    sarimax_rmse = evaluate_sarimax()
-    results["SARIMAX"] = sarimax_rmse if sarimax_rmse else "Evaluation failed"
+    sarimax_results = evaluate_sarimax()
 
     print("Evaluating Single-Household LSTM...")
-    lstm_single_rmse = evaluate_lstm_single()
-    results["LSTM Single"] = lstm_single_rmse if lstm_single_rmse else "Evaluation failed"
+    lstm_single_results = evaluate_lstm_single()
 
     print("Evaluating LSTM Sequential Training...")
-    lstm_seq_rmse = evaluate_lstm_sequential()
-    results["LSTM Sequential"] = lstm_seq_rmse if lstm_seq_rmse else "Evaluation failed"
+    lstm_seq_results = evaluate_lstm_sequential()
 
-    print("\nEvaluation Results (Average RMSE):")
-    for model, rmse in results.items():
-        print(f"{model}: {rmse}")
+    # Consolidate results
+    results = {
+        "ARIMA": arima_results,
+        "SARIMAX": sarimax_results,
+        "LSTM Single": lstm_single_results,
+        "LSTM Sequential": lstm_seq_results
+    }
+
+    # Display results
+    print("\nEvaluation Results (RMSE for Elec and Gas):")
+    for model, rmse_dict in results.items():
+        elec_rmse = rmse_dict.get("elec", "N/A")
+        gas_rmse = rmse_dict.get("gas", "N/A")
+        print(f"{model} -> Elec RMSE: {elec_rmse:.3f} | Gas RMSE: {gas_rmse:.3f}")
