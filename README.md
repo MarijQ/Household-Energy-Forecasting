@@ -1,5 +1,17 @@
 # ML-Project
 
+# 1. Intoduction
+
+# 2. Key Features
+
+# 3. Data Prep
+
+# 4. ML Models
+
+# 5. Results
+
+# Context
+
 # Project Scope: 
 
 Develop an ML model to predict gas, water and electricity consumption based on historical data, weather data and other features related to the subject area. The main aim is to predict accurate energy consumption for proper future planning. 
