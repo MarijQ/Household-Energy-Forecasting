@@ -318,7 +318,7 @@ def evaluate_lstm_sequential():
     Train LSTM sequentially on 20 random households, then evaluate on 5 random households,
     returning separate RMSE for elec and gas.
     """
-    train_files = random_household_selection(5)
+    train_files = random_household_selection(20)
     test_files = random_household_selection(5, exclude=train_files)
 
     train_dfs = []
