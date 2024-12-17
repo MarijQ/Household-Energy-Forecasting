@@ -15,6 +15,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Input
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from prophet import Prophet
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Suppress TensorFlow warnings
 tf.config.optimizer.set_jit(True)  # Enable JIT compilation for GPUs if available
@@ -43,10 +44,12 @@ def preprocess_data(df):
     if "timestamp" in df.columns:
         df["timestamp"] = pd.to_datetime(df["timestamp"])
         df.set_index("timestamp", inplace=True)
+        df.index.name = 'timestamp'  # Explicitly name the index 'timestamp'
     
     # Reindex to ensure consistent hourly frequency
     if len(df.index) > 0:
         df = df.reindex(pd.date_range(df.index.min(), df.index.max(), freq="h"))
+        df.index.name = 'timestamp'  # Ensure index remains named 'timestamp'
     
     # Fill missing values for 'elec' and 'gas'
     if "elec" in df.columns:
@@ -64,6 +67,7 @@ def preprocess_data(df):
     df.fillna(0, inplace=True)
 
     return df
+
 
 def evaluate_model(y_true, y_pred):
     """Compute RMSE for predictions."""
@@ -95,7 +99,6 @@ def evaluate_arima():
 
     test_files = random_household_selection(5, exclude=[train_file])
 
-    # Store RMSE values separately for elec and gas
     rmse_dict = {"elec": [], "gas": []}
 
     for target in ["elec", "gas"]:
@@ -112,13 +115,12 @@ def evaluate_arima():
 
             try:
                 forecast = arima_model.forecast(steps=len(df_test))
-                rmse = np.sqrt(mean_squared_error(df_test[target], forecast))
-                if np.isfinite(rmse):
+                rmse = evaluate_model(df_test[target], forecast)
+                if rmse is not None:
                     rmse_dict[target].append(rmse)
             except:
                 pass
 
-    # Convert list of RMSEs to mean per target
     for t in rmse_dict:
         rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
     return rmse_dict
@@ -167,8 +169,8 @@ def evaluate_sarimax():
             try:
                 forecast = sarimax_model.forecast(steps=len(df_test), exog=exog_test)
                 forecast = forecast[:len(df_test[target])]
-                rmse = np.sqrt(mean_squared_error(df_test[target], forecast))
-                if np.isfinite(rmse):
+                rmse = evaluate_model(df_test[target], forecast)
+                if rmse is not None:
                     rmse_dict[target].append(rmse)
             except Exception as e:
                 print(f"Error during SARIMAX evaluation for {test_file}: {e}")
@@ -183,7 +185,6 @@ def evaluate_sarimax():
 
 def fit_lstm_single(df, target_col):
     """Train LSTM model on one household for a single target variable."""
-    # Drop rows where target is missing
     df = df.dropna(subset=[target_col])
     
     # Separate features/target
@@ -197,7 +198,6 @@ def fit_lstm_single(df, target_col):
     data_scaled = scaler_X.fit_transform(data)
     target_scaled = scaler_y.fit_transform(target.reshape(-1, 1))
 
-    # Create sequences
     sequence_len = 24  # Use previous 24 hours as input
     X, y = [], []
     for i in range(sequence_len, len(data_scaled)):
@@ -245,7 +245,6 @@ def evaluate_lstm_single():
 
             data_test_scaled = scaler_X.transform(data_test)
 
-            # Create sequences
             sequence_len = 24
             X_test = []
             for i in range(sequence_len, len(data_test_scaled)):
@@ -256,8 +255,8 @@ def evaluate_lstm_single():
             y_pred_scaled = lstm_model.predict(X_test)
             y_pred = scaler_y.inverse_transform(y_pred_scaled)
 
-            rmse = np.sqrt(mean_squared_error(y_test, y_pred.flatten()))
-            if np.isfinite(rmse):
+            rmse = evaluate_model(y_test, y_pred.flatten())
+            if rmse is not None:
                 rmse_dict[target].append(rmse)
 
     for t in rmse_dict:
@@ -281,9 +280,8 @@ def fit_lstm_sequential(train_dfs, target_col):
         data = df.drop(columns=[target_col]).values
         target = df[target_col].values
 
-        # Initialize scalers if first iteration
         if model is None:
-            # First file dictates the shape and initializes everything
+            # First file dictates shape/scalers
             scaler_X = MinMaxScaler()
             scaler_y = MinMaxScaler()
 
@@ -317,16 +315,15 @@ def fit_lstm_sequential(train_dfs, target_col):
 
 def evaluate_lstm_sequential():
     """
-    Train LSTM sequentially on 5 random households, then evaluate on another 5,
+    Train LSTM sequentially on 20 random households, then evaluate on 5 random households,
     returning separate RMSE for elec and gas.
     """
-    train_files = random_household_selection(20)
+    train_files = random_household_selection(5)
     test_files = random_household_selection(5, exclude=train_files)
 
     train_dfs = []
     union_train_cols = set()
 
-    # Preprocess each train file, accumulate the union of columns
     for f in train_files:
         df_temp = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, f)))
         train_dfs.append(df_temp)
@@ -368,8 +365,92 @@ def evaluate_lstm_sequential():
             y_pred_scaled = lstm_model.predict(X_test)
             y_pred = scaler_y.inverse_transform(y_pred_scaled)
 
-            rmse = np.sqrt(mean_squared_error(y_true, y_pred.flatten()))
-            if np.isfinite(rmse):
+            rmse = evaluate_model(y_true, y_pred.flatten())
+            if rmse is not None:
+                rmse_dict[target].append(rmse)
+
+    for t in rmse_dict:
+        rmse_dict[t] = np.mean(rmse_dict[t]) if rmse_dict[t] else None
+    return rmse_dict
+
+# ========================================
+# Prophet Model
+# ========================================
+
+def fit_prophet(df, target_col):
+    """
+    Train a Prophet model using the given DataFrame (with 'timestamp' as index) for target_col.
+    We temporarily reset the index, rename columns to Prophet's required format (ds, y),
+    fit, and return the model.
+    """
+    # Prophet requires a column named 'ds' for time and 'y' for the target
+    # Temporarily reset index to a column
+    df_prophet = df.reset_index().rename(columns={'timestamp': 'ds', target_col: 'y'})
+    
+    # Only keep ds and y
+    df_prophet = df_prophet[['ds', 'y']]
+    
+    # Prophet requires no missing values
+    df_prophet.dropna(inplace=True)
+    
+    # Instantiate and fit Prophet
+    model = Prophet()
+    model.fit(df_prophet)
+    return model
+
+def evaluate_prophet():
+    """
+    Train and evaluate a Prophet model on a single random household (train),
+    then test on 5 random households. Return average RMSE for 'elec' and 'gas'.
+    """
+    if Prophet is None:
+        print("Prophet not installed. Skipping Prophet evaluation.")
+        return {"elec": None, "gas": None}
+
+    train_file = random_household_selection(1)[0]
+    df_train = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, train_file)))
+    train_cols = df_train.columns
+
+    test_files = random_household_selection(5, exclude=[train_file])
+    rmse_dict = {"elec": [], "gas": []}
+
+    for target in ["elec", "gas"]:
+        if target not in df_train.columns:
+            continue
+
+        prophet_model = fit_prophet(df_train, target)
+        for test_file in test_files:
+            df_test = preprocess_data(pd.read_csv(os.path.join(INPUT_DIR, test_file)))
+            df_test = df_test.reindex(columns=train_cols, fill_value=0)
+
+            if target not in df_test.columns:
+                continue
+            
+            # Length of test set
+            test_len = len(df_test)
+            if test_len == 0:
+                continue
+            
+            # Prophet forecasting approach:
+            #   We create a future dataframe for the test horizon
+            #   For hourly data, we do freq='h' 
+            df_train_index = df_train.index
+            last_train_timestamp = df_train_index.max()
+
+            # Make a future DataFrame of length test_len hours beyond last train timestamp
+            future_dates = pd.date_range(start=last_train_timestamp, periods=test_len+1, freq='h')[1:]
+            
+            # Prophet needs a DataFrame with 'ds' column
+            future_df = pd.DataFrame({'ds': future_dates})
+            
+            forecast = prophet_model.predict(future_df)
+            y_pred = forecast['yhat'].values  # predicted values
+            
+            # True test values
+            y_true = df_test[target].values
+            
+            rmse = evaluate_model(y_true, y_pred)
+            if rmse is not None:
                 rmse_dict[target].append(rmse)
 
     for t in rmse_dict:
@@ -381,29 +462,53 @@ def evaluate_lstm_sequential():
 # ========================================
 
 if __name__ == "__main__":
+    results = {}
+    
     print("Evaluating ARIMA Model...")
-    arima_results = evaluate_arima()
+    try:
+        arima_results = evaluate_arima()
+        results["ARIMA"] = arima_results
+    except Exception as e:
+        print(f"ARIMA evaluation failed: {e}")
+        results["ARIMA"] = {"elec": None, "gas": None}
 
     print("Evaluating SARIMAX Model...")
-    sarimax_results = evaluate_sarimax()
+    try:
+        sarimax_results = evaluate_sarimax()
+        results["SARIMAX"] = sarimax_results
+    except Exception as e:
+        print(f"SARIMAX evaluation failed: {e}")
+        results["SARIMAX"] = {"elec": None, "gas": None}
 
     print("Evaluating Single-Household LSTM...")
-    lstm_single_results = evaluate_lstm_single()
+    try:
+        lstm_single_results = evaluate_lstm_single()
+        results["LSTM Single"] = lstm_single_results
+    except Exception as e:
+        print(f"LSTM Single evaluation failed: {e}")
+        results["LSTM Single"] = {"elec": None, "gas": None}
 
     print("Evaluating LSTM Sequential Training...")
-    lstm_seq_results = evaluate_lstm_sequential()
+    try:
+        lstm_seq_results = evaluate_lstm_sequential()
+        results["LSTM Sequential"] = lstm_seq_results
+    except Exception as e:
+        print(f"LSTM Sequential evaluation failed: {e}")
+        results["LSTM Sequential"] = {"elec": None, "gas": None}
 
-    # Consolidate results
-    results = {
-        "ARIMA": arima_results,
-        "SARIMAX": sarimax_results,
-        "LSTM Single": lstm_single_results,
-        "LSTM Sequential": lstm_seq_results
-    }
+    print("Evaluating Prophet Model...")
+    try:
+        prophet_results = evaluate_prophet()
+        results["PROPHET"] = prophet_results
+    except Exception as e:
+        print(f"Prophet evaluation failed: {e}")
+        results["PROPHET"] = {"elec": None, "gas": None}
 
     # Display results
     print("\nEvaluation Results (RMSE for Elec and Gas):")
-    for model, rmse_dict in results.items():
+    for model_name, rmse_dict in results.items():
         elec_rmse = rmse_dict.get("elec", "N/A")
         gas_rmse = rmse_dict.get("gas", "N/A")
-        print(f"{model} -> Elec RMSE: {elec_rmse:.3f} | Gas RMSE: {gas_rmse:.3f}")
+        elec_rmse_str = f"{elec_rmse:.3f}" if elec_rmse not in [None, "N/A"] else "N/A"
+        gas_rmse_str = f"{gas_rmse:.3f}" if gas_rmse not in [None, "N/A"] else "N/A"
+        print(f"{model_name} -> Elec RMSE: {elec_rmse_str} | Gas RMSE: {gas_rmse_str}")
