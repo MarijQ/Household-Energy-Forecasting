@@ -10,6 +10,18 @@
 
 # 5. Results
 
+- **ARIMA Model**:
+The ARIMA model did a decent job at predicting both electricity and gas usage. However, it struggled more with gas data because it's a simpler model that can miss complex patterns.
+
+- **SARIMAX Model**:
+SARIMAX was excellent at predicting electricity usage since it can use additional variables to improve accuracy. However, it didn’t work well for gas predictions, likely because gas patterns are more complex.
+
+- **LSTM Single Layer**:
+The single-layer LSTM didn’t perform well for either electricity or gas predictions. It likely overfit the training data, meaning it learned too much from the training set and couldn’t handle new data effectively.
+
+- **LSTM Sequential**:
+The sequential LSTM did great for electricity predictions because it’s good at learning patterns over time. However, it struggled with gas data, likely because gas usage patterns are less predictable and harder to model.
+
 # Context
 
 # Project Scope: 
