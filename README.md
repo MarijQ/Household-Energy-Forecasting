@@ -7,7 +7,7 @@ Intorduce the team work and what was the tasks for all the team member
 
 # 2. Key Features
 
-### ***Ml Models***
+### ***Ml Models:***
 
 We explored and implemented several models to predict energy consumption:
 	•	ARIMA and SARIMA: For capturing patterns and seasonality in the energy usage data.
