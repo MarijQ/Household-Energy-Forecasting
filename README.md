@@ -10,9 +10,13 @@ Intorduce the team work and what was the tasks for all the team member
 ### ***Ml Models:***
 
 We explored and implemented several models to predict energy consumption:
-	•	ARIMA and SARIMA: For capturing patterns and seasonality in the energy usage data.
-	•	LSTM: A deep learning approach that helps uncover complex patterns and trends over time.
-	•	Prophet: A model well-suited for time series data, helping us make reliable and interpretable predictions.
+
+- ARIMA and SARIMA: For capturing patterns and seasonality in the energy usage data.
+ 
+- LSTM: A deep learning approach that helps uncover complex patterns and trends over time.
+ 
+- Prophet: A model well-suited for time series data, helping us make reliable and interpretable predictions.
+ 
 
 ### ***Tech Stack***:
 
