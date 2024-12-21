@@ -28,6 +28,24 @@ model used, teck stack used, dataset used
 data cleaning, feature engineering, table of features used. 
 
 # 4. ML Models
+
+In this project, we used several machine learning models, each chosen for their ability to handle time series data and make accurate predictions about energy usage. Here’s a brief overview of the models used and why we chose them:
+
+### ***ARIMA (AutoRegressive Integrated Moving Average)***:
+
+ARIMA is a statistical model that helps us understand and predict future values based on past data. It’s useful for time series data like energy consumption, where the past behavior of the data can help us forecast future trends.
+
+### ***SARIMA (Seasonal ARIMA)***:
+
+SARIMA builds on ARIMA but includes the ability to handle seasonal patterns in the data. Since energy usage can often be affected by seasonal factors (like weather), SARIMA helps capture these regular fluctuations to improve predictions.
+
+### ***STM (Long Short-Term Memory)***:
+
+LSTM is a type of deep learning model designed for sequential data. It’s particularly good at learning long-term dependencies and capturing complex patterns over time. This model is used to detect intricate patterns in energy usage that might not be easily visible with traditional methods.
+
+### ***Prophet***:
+ 
+Prophet is an open-source model developed by Facebook for forecasting time series data. It’s easy to use and works well with data that has strong seasonal effects, like energy consumption. We used it because it’s reliable and interpretable, which makes it a good choice for predicting future energy use.
 brief definition about all the models used and why is it used.
 
 # 5. Results
