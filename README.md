@@ -1,9 +1,20 @@
 # ML-Project
 
 # 1. Intoduction
-Why and what are we doing in this project? narrative of the project. Intorduce the team work and what was the tasks for all the team member
+The goal of our project is to predict how much energy people might use in the future for electricity, gas, and water. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely. In this project, we’ve worked as a team to build a tool that uses data and machine learning to make these predictions. 
+
+Intorduce the team work and what was the tasks for all the team member
 
 # 2. Key Features
+
+We explored and implemented several models to predict energy consumption:
+	•	ARIMA and SARIMA: For capturing patterns and seasonality in the energy usage data.
+	•	LSTM: A deep learning approach that helps uncover complex patterns and trends over time.
+	•	Prophet: A model well-suited for time series data, helping us make reliable and interpretable predictions.
+
+***Tech Stack***:
+The project leverages Python as the primary programming language, alongside essential libraries such as Pandas, NumPy, Matplotlib, TensorFlow, and Facebook’s Prophet. These tools allowed us to preprocess data, train models, and visualize results effectively.
+
 model used, teck stack used, dataset used
 
 # 3. Data Prep
