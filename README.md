@@ -25,6 +25,25 @@ The project leverages Python as the primary programming language, alongside esse
 model used, teck stack used, dataset used
 
 # 3. Data Prep
+
+The IDEAL Household Energy Dataset provided a wealth of information on energy usage across 255 homes, including electricity, gas, and water consumption, as well as metadata on household characteristics, sensors, and weather conditions. Preparing this data was essential to ensure its accuracy and usability for our project.
+
+### ***Data Source***:
+
+The dataset was sourced from the IDEAL Household Energy Dataset. It includes time-series data from sensors installed in homes, along with metadata such as home layouts, appliance types, and environmental factors.
+- Data Cleaning:
+- For most features, missing values were handled using forward and backward filling, ensuring continuity in time-series data.
+- Gas data had the highest proportion of missing values. In these cases, missing values were replaced with 0, assuming no gas usage during those periods, as outlined in the dataset documentation.
+- Anomalous readings, such as unrealistically high temperatures or humidity levels, were identified and removed based on the dataset guidelines.
+
+### ***Feature Engineering***:
+
+To enhance the dataset for modeling, additional features were created:
+
+- Time-Based Features: Indicators for weekdays, weekends, and public holidays to capture patterns in energy usage.
+- Weather Data Integration: Features like temperature, humidity, and wind speed were added, as weather has a direct impact on energy consumption.
+- Lag Features: Historical energy usage values (e.g., 1-day and 7-day lags) were introduced to capture trends over time.
+
 data cleaning, feature engineering, table of features used. 
 
 # 4. ML Models
