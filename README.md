@@ -3,7 +3,7 @@
 # 1. Intoduction
 The goal of our project is to predict how much energy people might use in the future for electricity, gas, and water. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely. In this project, we’ve worked as a team to build a tool that uses data and machine learning to make these predictions. 
 
-Intorduce the team work and what was the tasks for all the team member
+--- Intorduce the team work and what was the tasks for all the team member
 
 # 2. Key Features
 
@@ -22,7 +22,7 @@ We explored and implemented several models to predict energy consumption:
 
 The project leverages Python as the primary programming language, alongside essential libraries such as Pandas, NumPy, Matplotlib, TensorFlow, and Facebook’s Prophet. These tools allowed us to preprocess data, train models, and visualize results effectively.
 
-model used, teck stack used, dataset used
+--remove this-- model used, teck stack used, dataset used
 
 # 3. Data Prep
 
@@ -46,7 +46,7 @@ To enhance the dataset for modeling, additional features were created:
 - Weather Data Integration: Features like temperature, humidity, and wind speed were added, as weather has a direct impact on energy consumption.
 - Lag Features: Historical energy usage values (e.g., 1-day and 7-day lags) were introduced to capture trends over time.
 
-data cleaning, feature engineering, table of features used. 
+--remove this-- data cleaning, feature engineering, table of features used. 
 
 # 4. ML Models
 
@@ -67,7 +67,8 @@ LSTM is a type of deep learning model designed for sequential data. It’s parti
 ### ***Prophet***:
  
 Prophet is an open-source model developed by Facebook for forecasting time series data. It’s easy to use and works well with data that has strong seasonal effects, like energy consumption. We used it because it’s reliable and interpretable, which makes it a good choice for predicting future energy use.
-brief definition about all the models used and why is it used.
+
+--remove this-- brief definition about all the models used and why is it used.
 
 # 5. Results
 
