@@ -30,7 +30,7 @@ The IDEAL Household Energy Dataset provided a wealth of information on energy us
 
 ### ***Data Source***:
 
-The dataset was sourced from the IDEAL Household Energy Dataset. It includes time-series data from sensors installed in homes, along with metadata such as home layouts, appliance types, and environmental factors.
+The dataset was sourced from the [IDEAL Household Energy Dataset](https://datashare.ed.ac.uk/handle/10283/3647). It includes time-series data from sensors installed in homes, along with metadata such as home layouts, appliance types, and environmental factors.
 - Data Cleaning:
 - For most features, missing values were handled using forward and backward filling, ensuring continuity in time-series data.
 - Gas data had the highest proportion of missing values. In these cases, missing values were replaced with 0, assuming no gas usage during those periods, as outlined in the dataset documentation.
