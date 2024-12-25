@@ -74,7 +74,7 @@ Prophet is an open-source model developed by Facebook for forecasting time serie
 
 The results of our energy consumption prediction models highlight the performance of each approach for forecasting electricity and gas usage. Below is a summary of the evaluation results using RMSE (Root Mean Square Error) as the metric:
 
-### ***Evaluation Results (RMSE):
+### Evaluation Results (RMSE):
 
 ### ***Electricity Consumption***:
 
@@ -90,7 +90,7 @@ The results of our energy consumption prediction models highlight the performanc
 - LSTM Sequential: 2984.296
 - Prophet: 12197.262
   
-### ***Key Observations:
+### Key Observations:
 
 ### ***Electricity Predictions***:
 
