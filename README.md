@@ -83,7 +83,9 @@ The results of our energy consumption prediction models highlight the performanc
 - LSTM Single: 990.731
 - LSTM Sequential: 1178.299
 - Prophet: 2482.880
-- Gas Consumption:
+
+### ***Gas Consumption***:
+
 - ARIMA: 2936.300
 - SARIMAX: 2937.412
 - LSTM Single: 5266.041
