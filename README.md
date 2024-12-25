@@ -153,4 +153,4 @@ The results of our energy consumption prediction models highlight the performanc
 
 ## 8. License  
 
-This project is licensed under the MIT License. [LICENSE](LICENSE)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
