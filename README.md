@@ -60,7 +60,7 @@ ARIMA is a statistical model that helps us understand and predict future values 
 
 SARIMA builds on ARIMA but includes the ability to handle seasonal patterns in the data. Since energy usage can often be affected by seasonal factors (like weather), SARIMA helps capture these regular fluctuations to improve predictions.
 
-### ***STM (Long Short-Term Memory)***:
+### ***LSTM (Long Short-Term Memory)***:
 
 LSTM is a type of deep learning model designed for sequential data. It’s particularly good at learning long-term dependencies and capturing complex patterns over time. This model is used to detect intricate patterns in energy usage that might not be easily visible with traditional methods.
 
@@ -72,17 +72,41 @@ Prophet is an open-source model developed by Facebook for forecasting time serie
 
 # 5. Results
 
-- **ARIMA Model**:
-The ARIMA model did a decent job at predicting both electricity and gas usage. However, it struggled more with gas data because it's a simpler model that can miss complex patterns.
+The results of our energy consumption prediction models highlight the performance of each approach for forecasting electricity and gas usage. Below is a summary of the evaluation results using RMSE (Root Mean Square Error) as the metric:
 
-- **SARIMAX Model**:
-SARIMAX was excellent at predicting electricity usage since it can use additional variables to improve accuracy. However, it didn’t work well for gas predictions, likely because gas patterns are more complex.
+### ***Evaluation Results (RMSE):
 
-- **LSTM Single Layer**:
-The single-layer LSTM didn’t perform well for either electricity or gas predictions. It likely overfit the training data, meaning it learned too much from the training set and couldn’t handle new data effectively.
+### ***Electricity Consumption***:
 
-- **LSTM Sequential**:
-The sequential LSTM did great for electricity predictions because it’s good at learning patterns over time. However, it struggled with gas data, likely because gas usage patterns are less predictable and harder to model.
+- ARIMA: 4579.267
+- SARIMAX: 1231.687
+- LSTM Single: 990.731
+- LSTM Sequential: 1178.299
+- Prophet: 2482.880
+- Gas Consumption:
+- ARIMA: 2936.300
+- SARIMAX: 2937.412
+- LSTM Single: 5266.041
+- LSTM Sequential: 2984.296
+- Prophet: 12197.262
+  
+### ***Key Observations:
+
+### ***Electricity Predictions***:
+
+LSTM Single performed the best, achieving the lowest RMSE, followed by SARIMAX and LSTM Sequential. Prophet and ARIMA were less effective for electricity consumption predictions.
+
+### ***Gas Predictions***:
+
+ARIMA performed better compared to the other models, though its RMSE was still relatively high. Prophet struggled significantly with gas data, likely due to the higher percentage of missing values and imputation assumptions.
+
+### ***Insights Gained***:
+
+- Electricity consumption was easier to predict, showing more consistent patterns across the dataset.
+- Gas consumption predictions were challenging, as the dataset had significant missing values and less consistent patterns.
+-	Weather conditions and time-based features had a noticeable impact on both electricity and gas usage trends.
+
+These results highlight the need for choosing models based on the characteristics of the dataset and the specific energy type being analyzed.
 
 # 6. Running the code (script)
 explain how to run the code, dependencies and requirements
