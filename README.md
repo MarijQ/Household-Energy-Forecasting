@@ -103,6 +103,12 @@ Prophet achieved an RMSE of 2482.880. While it captured seasonal trends effectiv
 
 ARIMA had the highest RMSE (4579.267) among electricity models. Its limitation in handling seasonal and trend variations in larger datasets led to lower accuracy compared to other models.
 
+### ***Insights***:
+
+- Electricity consumption exhibited relatively stable patterns, making it easier to predict.
+- Time-based features such as weekends and holidays significantly influenced electricity usage trends.
+- The use of lag features and weather data further enhanced the performance of advanced models like LSTM.
+ 
 ### ***Gas Consumption***:
 
 - ARIMA: 2936.300
@@ -110,24 +116,37 @@ ARIMA had the highest RMSE (4579.267) among electricity models. Its limitation i
 - LSTM Single: 5266.041
 - LSTM Sequential: 2984.296
 - Prophet: 12197.262
+
+### ***Analysis***:
+
+1. *Best-Performing Model*:
+
+ARIMA produced the lowest RMSE (2936.300), showing that its simple, statistical approach was well-suited for gas consumption data, especially when dealing with short-term dependencies.
+
+2.	*Similar Performance of SARIMAX*:
+
+SARIMAX closely followed ARIMA with an RMSE of 2937.412. However, the inclusion of seasonal components didn’t offer significant improvements, possibly due to the inconsistent patterns in gas data.
+
+3.	*LSTM Models*:
+
+- LSTM (Sequential) performed moderately (RMSE: 2984.296), slightly worse than ARIMA and SARIMAX. Its results suggest that while LSTMs can capture complex patterns, they struggled due to the high proportion of missing values and irregularities in gas usage.
+- LSTM (Single) had the poorest performance among the models (RMSE: 5266.041). It indicates that the Single LSTM struggled to generalize well on this dataset.
+
+4.	*Poor Performance of Prophet*:
+
+Prophet showed the highest RMSE (12197.262), indicating that it struggled to handle the irregular and sparse nature of the gas consumption data.
+
+### ***Insights***:
+
+- Gas consumption predictions were more challenging due to missing data and irregular patterns.
+- Imputation of missing values (with 0) likely affected the models’ ability to accurately capture trends in gas usage.
+- Weather features, particularly temperature, had a significant influence on gas usage, with higher consumption during colder periods.
   
-### Key Observations:
+### ***Overall Observations***:
+- Electricity predictions were generally more accurate due to stable and consistent patterns in the data. Advanced models like LSTM Single and SARIMAX performed the best.
+- Gas predictions faced challenges due to irregularities and data gaps, with simpler models like ARIMA outperforming more complex methods.
 
-### ***Electricity Predictions***:
-
-LSTM Single performed the best, achieving the lowest RMSE, followed by SARIMAX and LSTM Sequential. Prophet and ARIMA were less effective for electricity consumption predictions.
-
-### ***Gas Predictions***:
-
-ARIMA performed better compared to the other models, though its RMSE was still relatively high. Prophet struggled significantly with gas data, likely due to the higher percentage of missing values and imputation assumptions.
-
-### ***Insights Gained***:
-
-- Electricity consumption was easier to predict, showing more consistent patterns across the dataset.
-- Gas consumption predictions were challenging, as the dataset had significant missing values and less consistent patterns.
--	Weather conditions and time-based features had a noticeable impact on both electricity and gas usage trends.
-
-These results highlight the need for choosing models based on the characteristics of the dataset and the specific energy type being analyzed.
+These results highlight the importance of tailoring model selection to the characteristics of the dataset and the type of energy being predicted.
 
 # 6. Running the code (script)
 explain how to run the code, dependencies and requirements
