@@ -153,7 +153,7 @@ The results of our energy consumption prediction models highlight the performanc
 
 ## Directory Structure
 
-'''
+```
 ├── Hourly-temps-by-location
 ├── cleaned_weather_data_by_location
 ├── ind-homes
@@ -165,7 +165,7 @@ The results of our energy consumption prediction models highlight the performanc
 │   ├── Raw-daily-temps-by-location
 │   └── hourly_readings
 └── raw_weather_data_by_location
-'''
+```
 ---
 ## 8. License  
 
