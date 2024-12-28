@@ -151,6 +151,22 @@ The results of our energy consumption prediction models highlight the performanc
 
 ---
 
+## Directory Structure
+
+'''
+├── Hourly-temps-by-location
+├── cleaned_weather_data_by_location
+├── ind-homes
+├── ind-homes-clean
+├── ind-homes-clean-modified
+├── ind-homes-final
+├── ind-homes-with-weather
+├── raw_data
+│   ├── Raw-daily-temps-by-location
+│   └── hourly_readings
+└── raw_weather_data_by_location
+'''
+---
 ## 8. License  
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
