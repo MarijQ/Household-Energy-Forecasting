@@ -97,18 +97,18 @@ The results of our energy consumption prediction models highlight the performanc
 
 #### ***Analysis:***  
 
-1. **Best-Performing Model:**  
-   LSTM (Single) had the lowest RMSE (990.731), making it the most accurate model for predicting electricity consumption. Its ability to capture long-term dependencies and trends in sequential data contributed to its strong performance.  
 
-2. **SARIMAX and LSTM (Sequential):**  
-   - SARIMAX followed closely with an RMSE of 1231.687, benefiting from its ability to handle seasonality in the electricity data.  
-   - LSTM (Sequential) also performed well (RMSE: 1178.299), though it slightly lagged behind its Single variant due to the complexity of training sequential layers effectively.  
+## Best-Performing Model:
+Our LSTM (Single) model achieved the lowest RMSE of 990.731, making it the most accurate for predicting electricity consumption. Its ability to capture long-term dependencies and trends in sequential data contributed to this strong performance.
 
-3. **Moderate Performance of Prophet:**  
-   Prophet achieved an RMSE of 2482.880. While it captured seasonal trends effectively, it struggled with more complex, non-linear relationships in the data.  
+## SARIMAX and LSTM (Sequential):
+The SARIMAX model followed closely with an RMSE of 1231.687, benefiting from its capability to handle seasonality in the data. Meanwhile, the LSTM (Sequential) model also performed well, with an RMSE of 1178.299, though it slightly lagged behind the LSTM (Single) due to the challenges of training sequential layers effectively.
 
-4. **Least Effective Model:**  
-   ARIMA had the highest RMSE (4579.267) among electricity models. Its limitation in handling seasonal and trend variations in larger datasets led to lower accuracy compared to other models.  
+## Moderate Performance of Prophet:
+Our Prophet model achieved an RMSE of 2482.880. While it captured seasonal trends effectively, it struggled with more complex, non-linear relationships within the data.
+
+## Least Effective Model:
+The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its limitations in handling seasonal and trend variations in larger datasets resulted in lower accuracy compared to other approaches. 
 
 ### ***Insights:***  
 - Electricity consumption exhibited relatively stable patterns, making it easier to predict.  
