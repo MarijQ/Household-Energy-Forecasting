@@ -92,6 +92,9 @@ The results of our energy consumption prediction models highlight the performanc
 | LSTM Sequential   | 1178.299   |
 | Prophet           | 2482.880   |
 
+**Electricity Actual vs Fitted**
+>![image](https://github.com/user-attachments/assets/3a4e3498-8b8a-465d-af0d-2e40b150f5a6)
+
 #### ***Analysis:***  
 
 1. **Best-Performing Model:**  
