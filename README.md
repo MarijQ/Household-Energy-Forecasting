@@ -17,7 +17,7 @@
 2. [Tech Stack](#tech-stack)   
 3. [Running the Code](#running-the-code)  
 4. [Data Preparation](#data-preparation)
-5. [Average Price Generation](#average-price-generation) 
+5. [Machine Learning / Deep Learning Models](#machine-learning-/-deep-learning-models) 
 6. [User Interface](#user-interface)  
 7. [Running the Code](#running-the-code)  
 8. [Future Improvements](#future-improvements)  
@@ -40,7 +40,7 @@ Key activities:
 
 ---
 
-## 2. Tech Stack  
+## Tech Stack  
 
 ### ***ML Models:***  
 
@@ -55,7 +55,7 @@ The project leverages Python as the primary programming language, alongside esse
 
 ---
 
-## 3. Running the Code 
+## Running the Code 
 This project is implemented in a Jupyter Notebook. To run the code, simply follow these steps:
 
 1. Open the Jupyter Notebook by running:
@@ -114,7 +114,7 @@ These screenshots demonstrate an example of weather data imputation and simulati
 
 ---
 
-## 4. Machine Learning/ Deep Learning Models  
+## Machine Learning / Deep Learning Models  
 
 In this project, we used several machine learning models, each chosen for their ability to handle time series data and make accurate predictions about energy usage.  
 
