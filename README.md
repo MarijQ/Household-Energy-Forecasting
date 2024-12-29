@@ -2,6 +2,14 @@
 
 ---
 
+## Team and Contact
+
+- **Marij**: MEng Aeronautical (Imperial), MSc Data Science (Brunel), ex-EY Parthenon
+- **Het**: MSc Data Science (Brunel), BSc Information Technology 
+- **George**: MSc Data Science (Brunel), BSc Economics (AUTH)
+
+---
+
 ## 1. Introduction  
 
 The goal of our project is to predict how much energy people might use in the future for electricity, gas, and water. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely.  
