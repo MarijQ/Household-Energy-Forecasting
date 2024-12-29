@@ -17,8 +17,7 @@ The goal of our project is to predict how much energy people might use in the fu
 
 In this project, we’ve worked as a team to build a tool that uses data and machine learning to make these predictions.  
 
-### ***Team Contributions:***  
-Each team member contributed to different aspects of the project:  
+Key activities:  
 - **Data Preparation:** Cleaning, preprocessing, and feature engineering.  
 - **Model Implementation:** Experimenting with and fine-tuning machine learning models.  
 - **Evaluation and Analysis:** Interpreting results and refining predictions.  
