@@ -5,7 +5,7 @@
 ## Team and Contact
 
 - **Marij**: MEng Aeronautical (Imperial), MSc Data Science (Brunel), ex-EY Parthenon
-- **Het**: MSc Data Science (Brunel), BSc Information Technology 
+- **Het**: MSc Data Science (Brunel), BSc Information Technology
 - **George**: MSc Data Science (Brunel), BSc Economics (AUTH)
 
 ---
@@ -17,11 +17,11 @@ The goal of our project is to predict how much energy people might use in the fu
 In this project, we’ve worked as a team to build a tool that uses data and machine learning to make these predictions.  
 
 ### ***Team Contributions:***  
-- Each team member contributed to different aspects of the project:  
-  - **Data Preparation:** Cleaning, preprocessing, and feature engineering.  
-  - **Model Implementation:** Experimenting with and fine-tuning machine learning models.  
-  - **Evaluation and Analysis:** Interpreting results and refining predictions.  
-  - **Visualization and Documentation:** Creating visualizations and maintaining the project documentation.  
+Each team member contributed to different aspects of the project:  
+- **Data Preparation:** Cleaning, preprocessing, and feature engineering.  
+- **Model Implementation:** Experimenting with and fine-tuning machine learning models.  
+- **Evaluation and Analysis:** Interpreting results and refining predictions.  
+- **Visualization and Documentation:** Creating visualizations and maintaining the project documentation.  
 
 ---
 
@@ -100,25 +100,24 @@ The results of our energy consumption prediction models highlight the performanc
 | LSTM Sequential   | 1178.299   |
 | Prophet           | 2482.880   |
 
-**Electricity Actual vs Fitted**
->![image](https://github.com/user-attachments/assets/3a4e3498-8b8a-465d-af0d-2e40b150f5a6)
+**Electricity Actual vs Fitted**  
+![image](https://github.com/user-attachments/assets/3a4e3498-8b8a-465d-af0d-2e40b150f5a6)
 
 #### ***Analysis:***  
 
+- **Best-Performing Model:**  
+  Our LSTM (Single) model achieved the lowest RMSE of 990.731, making it the most accurate for predicting electricity consumption. Its ability to capture long-term dependencies and trends in sequential data contributed to this strong performance.
 
-## Best-Performing Model:
-Our LSTM (Single) model achieved the lowest RMSE of 990.731, making it the most accurate for predicting electricity consumption. Its ability to capture long-term dependencies and trends in sequential data contributed to this strong performance.
+- **SARIMAX and LSTM (Sequential):**  
+  The SARIMAX model followed closely with an RMSE of 1231.687, benefiting from its capability to handle seasonality in the data. Meanwhile, the LSTM (Sequential) model also performed well, with an RMSE of 1178.299, though it slightly lagged behind the LSTM (Single) due to the challenges of training sequential layers effectively.
 
-## SARIMAX and LSTM (Sequential):
-The SARIMAX model followed closely with an RMSE of 1231.687, benefiting from its capability to handle seasonality in the data. Meanwhile, the LSTM (Sequential) model also performed well, with an RMSE of 1178.299, though it slightly lagged behind the LSTM (Single) due to the challenges of training sequential layers effectively.
+- **Moderate Performance of Prophet:**  
+  Our Prophet model achieved an RMSE of 2482.880. While it captured seasonal trends effectively, it struggled with more complex, non-linear relationships within the data.
 
-## Moderate Performance of Prophet:
-Our Prophet model achieved an RMSE of 2482.880. While it captured seasonal trends effectively, it struggled with more complex, non-linear relationships within the data.
+- **Least Effective Model:**  
+  The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its limitations in handling seasonal and trend variations in larger datasets resulted in lower accuracy compared to other approaches.  
 
-## Least Effective Model:
-The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its limitations in handling seasonal and trend variations in larger datasets resulted in lower accuracy compared to other approaches. 
-
-### ***Insights:***  
+#### ***Insights:***  
 - Electricity consumption exhibited relatively stable patterns, making it easier to predict.  
 - Time-based features such as weekends and holidays significantly influenced electricity usage trends.  
 - The use of lag features and weather data further enhanced the performance of advanced models like LSTM.  
@@ -132,31 +131,30 @@ The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its
 | LSTM Sequential   | 2984.296   |
 | Prophet           | 12197.262  |
 
-**Gas Actual vs Fitted**
->![image](https://github.com/user-attachments/assets/bb349be9-59e9-4a10-924f-423e72ea5d1f)
-
+**Gas Actual vs Fitted**  
+![image](https://github.com/user-attachments/assets/bb349be9-59e9-4a10-924f-423e72ea5d1f)
 
 #### ***Analysis:***  
 
-## Best-Performing Model:
-Our ARIMA model produced the lowest RMSE of 2936.300, showing that its simple, statistical approach was well-suited for gas consumption data, especially when dealing with short-term dependencies.
+- **Best-Performing Model:**  
+  Our ARIMA model produced the lowest RMSE of 2936.300, showing that its simple, statistical approach was well-suited for gas consumption data, especially when dealing with short-term dependencies.
 
-## Similar Performance of SARIMAX:
-SARIMAX closely followed ARIMA with an RMSE of 2937.412. However, the inclusion of seasonal components didn’t offer significant improvements, possibly due to the inconsistent patterns in gas data.
+- **Similar Performance of SARIMAX:**  
+  SARIMAX closely followed ARIMA with an RMSE of 2937.412. However, the inclusion of seasonal components didn’t offer significant improvements, possibly due to the inconsistent patterns in gas data.
 
-## LSTM Models:
-- The LSTM (Sequential) model performed moderately with an RMSE of 2984.296, slightly worse than ARIMA and SARIMAX. Its results suggest that while LSTMs can capture complex patterns, they struggled due to the high proportion of missing values and irregularities in gas usage.
-- The LSTM (Single) model had the poorest performance among all, with an RMSE of 5266.041. This indicates that the Single LSTM struggled to generalize well on this dataset.
+- **LSTM Models:**  
+  - The LSTM (Sequential) model performed moderately with an RMSE of 2984.296, slightly worse than ARIMA and SARIMAX. Its results suggest that while LSTMs can capture complex patterns, they struggled due to the high proportion of missing values and irregularities in gas usage.
+  - The LSTM (Single) model had the poorest performance among all, with an RMSE of 5266.041. This indicates that the Single LSTM struggled to generalize well on this dataset.
 
-## Poor Performance of Prophet:
-Our Prophet model showed the highest RMSE of 12197.262, indicating that it struggled to handle the irregular and sparse nature of the gas consumption data.
+- **Poor Performance of Prophet:**  
+  Our Prophet model showed the highest RMSE of 12197.262, indicating that it struggled to handle the irregular and sparse nature of the gas consumption data.
 
-### ***Insights:***  
+#### ***Insights:***  
 - Gas consumption predictions were more challenging due to missing data and irregular patterns.  
 - Imputation of missing values (with 0) likely affected the models’ ability to accurately capture trends in gas usage.  
 - Weather features, particularly temperature, had a significant influence on gas usage, with higher consumption during colder periods.  
 
-### ***Overall Observations:***  
+#### ***Overall Observations:***  
 - Electricity predictions were generally more accurate due to stable and consistent patterns in the data. Advanced models like LSTM Single and SARIMAX performed the best.  
 - Gas predictions faced challenges due to irregularities and data gaps, with simpler models like ARIMA outperforming more complex methods.  
 
@@ -176,6 +174,7 @@ This project is implemented in a Jupyter Notebook. To run the code, simply follo
 3. Run the entire script by selecting **Run All** from the "Cell" menu.
 
 The notebook will execute all the code, including model training and evaluation.
+
 ---
 
 ## Directory Structure
@@ -189,11 +188,13 @@ The notebook will execute all the code, including model training and evaluation.
 ├── ind-homes-final
 ├── ind-homes-with-weather
 ├── raw_data
-│   ├── Raw-daily-temps-by-location
-│   └── hourly_readings
+│   ├── Raw-daily-temps-by-location
+│   └── hourly_readings
 └── raw_weather_data_by_location
 ```
+
 ---
+
 ## 8. License  
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
