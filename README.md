@@ -17,7 +17,7 @@
 2. [Tech Stack](#tech-stack)   
 3. [Running the Code](#running-the-code)  
 4. [Data Preparation](#data-preparation)
-5. [Machine Learning / Deep Learning Models](#machine-learning-/-deep-learning-models) 
+5. [Machine Learning / Deep Learning Models](#machine-learning--deep-learning-models) 
 6. [User Interface](#user-interface)  
 7. [Running the Code](#running-the-code)  
 8. [Future Improvements](#future-improvements)  
