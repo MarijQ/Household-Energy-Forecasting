@@ -1,4 +1,4 @@
-# ML-Project  
+# Household Energy Forecasting  
 
 ---
 
@@ -13,7 +13,7 @@
 
 ## 1. Introduction  
 
-The goal of our project is to predict how much energy people might use in the future for electricity, gas, and water. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely.  
+The goal of our project is to predict how much energy people might use in the future for electricity and gas. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely.  
 
 In this project, we’ve worked as a team to build a tool that uses data and machine learning to make these predictions.  
 
