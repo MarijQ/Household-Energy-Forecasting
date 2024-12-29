@@ -130,18 +130,18 @@ The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its
 
 #### ***Analysis:***  
 
-1. **Best-Performing Model:**  
-   ARIMA produced the lowest RMSE (2936.300), showing that its simple, statistical approach was well-suited for gas consumption data, especially when dealing with short-term dependencies.  
+## Best-Performing Model:
+Our ARIMA model produced the lowest RMSE of 2936.300, showing that its simple, statistical approach was well-suited for gas consumption data, especially when dealing with short-term dependencies.
 
-2. **Similar Performance of SARIMAX:**  
-   SARIMAX closely followed ARIMA with an RMSE of 2937.412. However, the inclusion of seasonal components didn’t offer significant improvements, possibly due to the inconsistent patterns in gas data.  
+## Similar Performance of SARIMAX:
+SARIMAX closely followed ARIMA with an RMSE of 2937.412. However, the inclusion of seasonal components didn’t offer significant improvements, possibly due to the inconsistent patterns in gas data.
 
-3. **LSTM Models:**  
-   - LSTM (Sequential) performed moderately (RMSE: 2984.296), slightly worse than ARIMA and SARIMAX. Its results suggest that while LSTMs can capture complex patterns, they struggled due to the high proportion of missing values and irregularities in gas usage.  
-   - LSTM (Single) had the poorest performance among the models (RMSE: 5266.041). It indicates that the Single LSTM struggled to generalize well on this dataset.  
+## LSTM Models:
+- The LSTM (Sequential) model performed moderately with an RMSE of 2984.296, slightly worse than ARIMA and SARIMAX. Its results suggest that while LSTMs can capture complex patterns, they struggled due to the high proportion of missing values and irregularities in gas usage.
+- The LSTM (Single) model had the poorest performance among all, with an RMSE of 5266.041. This indicates that the Single LSTM struggled to generalize well on this dataset.
 
-4. **Poor Performance of Prophet:**  
-   Prophet showed the highest RMSE (12197.262), indicating that it struggled to handle the irregular and sparse nature of the gas consumption data.  
+## Poor Performance of Prophet:
+Our Prophet model showed the highest RMSE of 12197.262, indicating that it struggled to handle the irregular and sparse nature of the gas consumption data.
 
 ### ***Insights:***  
 - Gas consumption predictions were more challenging due to missing data and irregular patterns.  
@@ -155,10 +155,6 @@ The ARIMA model showed the highest RMSE of 4579.267 among all tested models. Its
 ---
 
 ## 6. Running the Code (script)  
-
----
-
-## 7. Future Work  
 
 ---
 
