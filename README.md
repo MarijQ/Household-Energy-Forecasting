@@ -155,7 +155,19 @@ Our Prophet model showed the highest RMSE of 12197.262, indicating that it strug
 ---
 
 ## 6. Running the Code (script)  
+This project is implemented in a Jupyter Notebook. To run the code, simply follow these steps:
 
+1. Open the Jupyter Notebook by running:
+
+    ```bash
+    jupyter notebook
+    ```
+
+2. Open the notebook file (`*.ipynb`) in the Jupyter interface.
+
+3. Run the entire script by selecting **Run All** from the "Cell" menu.
+
+The notebook will execute all the code, including model training and evaluation.
 ---
 
 ## Directory Structure
