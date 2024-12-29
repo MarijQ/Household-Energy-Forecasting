@@ -84,11 +84,13 @@ The results of our energy consumption prediction models highlight the performanc
 ### ***Evaluation Results (RMSE):***  
 
 #### **Electricity Consumption:**  
-- **ARIMA:** 4579.267  
-- **SARIMAX:** 1231.687  
-- **LSTM Single:** 990.731  
-- **LSTM Sequential:** 1178.299  
-- **Prophet:** 2482.880  
+| Model             | RMSE       |
+|-------------------|------------|
+| ARIMA             | 4579.267   |
+| SARIMAX           | 1231.687   |
+| LSTM Single       | 990.731    |
+| LSTM Sequential   | 1178.299   |
+| Prophet           | 2482.880   |
 
 #### ***Analysis:***  
 
@@ -111,11 +113,13 @@ The results of our energy consumption prediction models highlight the performanc
 - The use of lag features and weather data further enhanced the performance of advanced models like LSTM.  
 
 #### **Gas Consumption:**  
-- **ARIMA:** 2936.300  
-- **SARIMAX:** 2937.412  
-- **LSTM Single:** 5266.041  
-- **LSTM Sequential:** 2984.296  
-- **Prophet:** 12197.262  
+| Model             | RMSE       |
+|-------------------|------------|
+| ARIMA             | 2936.300   |
+| SARIMAX           | 2937.412   |
+| LSTM Single       | 5266.041   |
+| LSTM Sequential   | 2984.296   |
+| Prophet           | 12197.262  |
 
 #### ***Analysis:***  
 
