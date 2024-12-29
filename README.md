@@ -177,7 +177,7 @@ The notebook will execute all the code, including model training and evaluation.
 
 ---
 
-## Directory Structure
+## 7. Directory Structure
 
 ```
 ├── Hourly-temps-by-location
