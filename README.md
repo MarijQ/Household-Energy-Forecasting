@@ -14,9 +14,9 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)  
-2. [Project Overview](#project-overview)   
-3. [Scraping and Data Collection](#scraping-and-data-collection)  
-4. [Data Storage and Preparation](#data-storage-and-preparation)
+2. [Tech Stack](#tech-stack)   
+3. [Running the Code](#running-the-code)  
+4. [Data Preparation](#data-preparation)
 5. [Average Price Generation](#average-price-generation) 
 6. [User Interface](#user-interface)  
 7. [Running the Code](#running-the-code)  
@@ -26,7 +26,7 @@
 
 --- 
 
-## 1. Introduction  
+## Introduction  
 
 The goal of our project is to predict how much energy people might use in the future for electricity and gas. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely.  
 
@@ -72,7 +72,7 @@ This project is implemented in a Jupyter Notebook. To run the code, simply follo
 
 ---
 
-## 4. Data Preparation  
+## Data Preparation  
 
 The IDEAL Household Energy Dataset provided information on energy usage across 255 homes, including electricity and gas, as well as metadata on household characteristics, sensors, and weather conditions. Preparing this data was essential to ensure its accuracy and usability for our project.  
 
@@ -97,6 +97,20 @@ The dataset was sourced from the [IDEAL Household Energy Dataset](https://datash
 To enhance the dataset for modeling, additional features were created:    
 - **Weather Data Integration:**  To align with energy consumption data, we generated hourly timestamps for weather data using a sine function, with maximum temperatures timed to peak at 4 PM.
 - **Metadata Integration:** Merged external metadata for individual homes, such as household characteristics, location data, and boiler type, onto the primary consumption dataset for enriched multi-dimensional analyses.
+
+These screenshots demonstrate an example of weather data imputation and simulation of hourly timestamps:
+- **Original Weather Data for Fife:**
+  
+![image](https://github.com/user-attachments/assets/40f894d3-2431-4b0f-a071-18f961783250)
+
+- **Imputed Weather Data:**
+  
+![image](https://github.com/user-attachments/assets/6b7c4686-13e9-4e50-80df-6bfff129edf5)
+
+- **Simulation of Hourly Weather Data used in Models:**
+  
+![image](https://github.com/user-attachments/assets/24d19655-d089-4c1f-9e67-8631b94743df)
+
 
 ---
 
