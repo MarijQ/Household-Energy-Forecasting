@@ -18,11 +18,10 @@
 3. [Running the Code](#running-the-code)  
 4. [Data Preparation](#data-preparation)
 5. [Machine Learning / Deep Learning Models](#machine-learning--deep-learning-models) 
-6. [User Interface](#user-interface)  
-7. [Running the Code](#running-the-code)  
-8. [Future Improvements](#future-improvements)  
-9. [Team and Contact](#team-and-contact)
-10. [License](#license)
+6. [Results](#results)  
+7. [Overall Insights and Reflections](#overall-insights-and-reflections)    
+8. [Team and Contact](#team-and-contact)
+9. [License](#license)
 
 --- 
 
@@ -150,7 +149,7 @@ Note that the accuracy of predictions are dependent on the choice of households 
 
 ---
 
-## 5. Results  
+## Results  
 
 The results of our energy consumption prediction models highlight the performance of each approach for forecasting electricity and gas usage. Below is a summary of the evaluation results using RMSE (Root Mean Square Error) as the metric:  
 
@@ -230,7 +229,9 @@ Prophet had the worst performance with an RMSE of 12197. It struggled with the s
 - Prophet’s constraints: Prophet, designed for strong seasonal trends, struggled with the highly variable and inconsistent nature of the gas consumption data.
 - Temperature impact: Weather features like temperature played a key role, with colder weather correlating to higher gas usage, but this signal wasn’t enough to boost complex models in this case.
 
-## **Overall Insights and Reflections:**  
+---
+
+## Overall Insights and Reflections:
 - Electricity predictions were easier and more accurate: Stable patterns and clear seasonality allowed models like LSTM and SARIMAX to perform well, with LSTM (Single) being the most effective at capturing complex temporal dependencies. However, this outperformance may be due to random chance (variation between households and random sampling)
 - Gas predictions were more challenging: Irregular usage patterns, sparse data, and imputed missing values significantly hindered model performance, particularly for LSTM. Additionally, choosing to exclude all households with >50% missing values for gas and imputing the remainder as zeros may have exacerbated this.
 - Prophet struggled with variability: Its design for datasets with strong seasonality and trends limited its ability to handle the irregular and inconsistent patterns seen in gas consumption. This model was also not able to benefit from additional explanatory variables such as weather context or metadata.
@@ -239,7 +240,7 @@ Prophet had the worst performance with an RMSE of 12197. It struggled with the s
 
 ---
 
-## 7. Team and Contact
+## Team and Contact
 
 - **Marij Qureshi**: MEng Aeronautical Engineering (Imperial), MSc Data Science (Brunel), ex-EY Parthenon
 - **Georgios Gkakos**: MSc Data Science (Brunel), BSc Economics (AUTH)
@@ -249,6 +250,6 @@ For questions, feel free to reach out via GitHub issues or email any of us.
 
 ---
 
-## 8. License  
+## License  
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
