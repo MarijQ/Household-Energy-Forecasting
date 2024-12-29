@@ -11,6 +11,21 @@
 
 ---
 
+## Table of Contents
+
+1. [Introduction](#introduction)  
+2. [Project Overview](#project-overview)   
+3. [Scraping and Data Collection](#scraping-and-data-collection)  
+4. [Data Storage and Preparation](#data-storage-and-preparation)
+5. [Average Price Generation](#average-price-generation) 
+6. [User Interface](#user-interface)  
+7. [Running the Code](#running-the-code)  
+8. [Future Improvements](#future-improvements)  
+9. [Team and Contact](#team-and-contact)
+10. [License](#license)
+
+--- 
+
 ## 1. Introduction  
 
 The goal of our project is to predict how much energy people might use in the future for electricity and gas. By looking at past energy usage, weather data, and other factors, we want to help people better understand their energy habits. This can make it easier to plan, save money, and use resources more wisely.  
@@ -25,7 +40,7 @@ Key activities:
 
 ---
 
-## 2. Key Features  
+## 2. Tech Stack  
 
 ### ***ML Models:***  
 
@@ -34,42 +49,49 @@ We explored and implemented several models to predict energy consumption:
 - **LSTM:** A deep learning approach that helps uncover complex patterns and trends over time.  
 - **Prophet:** A model well-suited for time series data, helping us make reliable and interpretable predictions.  
 
-### ***Tech Stack:***  
+### ***Libraries:***  
 
 The project leverages Python as the primary programming language, alongside essential libraries such as Pandas, NumPy, Matplotlib, TensorFlow, and Facebook’s Prophet. These tools allowed us to preprocess data, train models, and visualize results effectively.  
 
 ---
 
-## 3. Data Prep  
+## 3. Data Preparation  
 
-The IDEAL Household Energy Dataset provided a wealth of information on energy usage across 255 homes, including electricity, gas, and water consumption, as well as metadata on household characteristics, sensors, and weather conditions. Preparing this data was essential to ensure its accuracy and usability for our project.  
+The IDEAL Household Energy Dataset provided information on energy usage across 255 homes, including electricity and gas, as well as metadata on household characteristics, sensors, and weather conditions. Preparing this data was essential to ensure its accuracy and usability for our project.  
 
 ### ***Data Source:***  
 
 The dataset was sourced from the [IDEAL Household Energy Dataset](https://datashare.ed.ac.uk/handle/10283/3647). It includes time-series data from sensors installed in homes, along with metadata such as home layouts, appliance types, and environmental factors.  
 
+### ***Merging Datasets:***
+
+ - The dataset included individually zipped CSV files for each sensor in every home, with data split across multiple files.
+ - We merged all sensor data into a single CSV per home by aligning and matching timestamps across the sensors.
+ - After merging, we renamed columns for consistency and clarity while trimming any unnecessary or redundant features.
+
 ### ***Data Cleaning:***  
 
 - For most features, missing values were handled using forward and backward filling, ensuring continuity in time-series data.  
-- Gas data had the highest proportion of missing values. In these cases, missing values were replaced with 0, assuming no gas usage during those periods, as outlined in the dataset documentation.  
-- Anomalous readings, such as unrealistically high temperatures or humidity levels, were identified and removed based on the dataset guidelines.  
+- Gas data had the highest proportion of missing values. In these cases, missing values were replaced with 0, assuming no gas usage during those periods, as outlined in the dataset documentation.
+- Gaps in weather data were filled using Fourier Series, complemented by the residuals of the Fourier analysis to capture realistic temperature variability throughout the year.  
 
 ### ***Feature Engineering:***  
 
-To enhance the dataset for modeling, additional features were created:  
-- **Time-Based Features:** Indicators for weekdays, weekends, and public holidays to capture patterns in energy usage.  
-- **Weather Data Integration:** Features like temperature, humidity, and wind speed were added, as weather has a direct impact on energy consumption.  
-- **Lag Features:** Historical energy usage values (e.g., 1-day and 7-day lags) were introduced to capture trends over time.  
+To enhance the dataset for modeling, additional features were created:    
+- **Weather Data Integration:**  To align with energy consumption data, we generated hourly timestamps for weather data using a sine function, with maximum temperatures timed to peak at 4 PM.
+- **Metadata Integration:** Merged external metadata for individual homes, such as household characteristics, location data, and boiler type, onto the primary consumption dataset for enriched multi-dimensional analyses.
 
 ---
 
-## 4. ML Models  
+## 4. Machine Learning/ Deep Learning Models  
 
 In this project, we used several machine learning models, each chosen for their ability to handle time series data and make accurate predictions about energy usage.  
 
 ### ***ARIMA (AutoRegressive Integrated Moving Average):***  
 
-ARIMA is a statistical model that helps us understand and predict future values based on past data. It’s useful for time series data like energy consumption, where the past behavior of the data can help us forecast future trends.  
+ARIMA is a statistical model that helps us understand and predict future values based on past data. It’s useful for time series data like energy consumption, where the past behavior of the data can help us forecast future trends. 
+
+We trained two seperate models, one for electricity and one for gas consumption and forecated the future consumption of those based on the past data points.
 
 ### ***SARIMA (Seasonal ARIMA):***  
 
