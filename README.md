@@ -2,11 +2,12 @@
 
 ---
 
-## Team and Contact
-
-- **Marij**: MEng Aeronautical (Imperial), MSc Data Science (Brunel), ex-EY Parthenon
-- **Het**: MSc Data Science (Brunel), BSc Information Technology
-- **George**: MSc Data Science (Brunel), BSc Economics (AUTH)
+> ### Note: Archived Repository
+> This repository represents the completed version of the project (as of 29/12/2024) collaboratively built by:
+> 
+> [Marij Qureshi](https://github.com/MarijQ), [Georgios Gkakos](https://github.com/GGkakos), [Het Suhagiya](https://github.com/HetSuhagiya)
+> 
+> This repository is no longer actively maintained. Please see individual forks for the most up-to-date versions.
 
 ---
 
@@ -195,6 +196,16 @@ The notebook will execute all the code, including model training and evaluation.
 
 ---
 
-## 8. License  
+## 8. Team and Contact
+
+- **Marij Qureshi**: MEng Aeronautical Engineering (Imperial), MSc Data Science (Brunel), ex-EY Parthenon
+- **Georgios Gkakos**: MSc Data Science (Brunel), BSc Economics (AUTH)
+- **Het Suhagiya**: MSc Data Science (Brunel), BSc Information Technology 
+
+For questions, feel free to reach out via GitHub issues or email any of us.
+
+---
+
+## 9. License  
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
