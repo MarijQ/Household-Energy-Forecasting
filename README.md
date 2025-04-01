@@ -2,6 +2,15 @@
 
 ---
 
+> ### Note: Archived Repository
+> This repository represents the completed version of the project (as of 29/12/2024) collaboratively built by:
+> 
+> [Marij Qureshi](https://github.com/MarijQ), [Georgios Gkakos](https://github.com/GGkakos), [Het Suhagiya](https://github.com/HetSuhagiya)
+> 
+> This repository is no longer actively maintained. Please see individual forks for the most up-to-date versions.
+
+---
+
 ## Table of Contents
 
 1. [Introduction](#introduction)  
